@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<script>
+    Mousetrap.bind("enter", function(){
+        document.getElementById("login-form").submit()
+    })
+</script>
+<form action="#" method="POST" id="login-form"> <!-- Sends POST request to flask server -->
+    <input type="text" name="name" placeholder="Enter your name" required>
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    <div>{{ recaptcha }}</div> <!-- Refer to 'recaptcha' variable in main.py -->
+    <p>{{ message }}</p>
+    <input type="submit" value="Login">
+    
+</form>
+{% endblock content %}

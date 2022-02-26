@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Admin Login{% endblock title %}
+{% block content %}
+<script>
+    
+
+</script>
+<form action="#" method="post", id="login-form">
+    <input type="text" name="adminName" placeholder="Enter Name" required>
+    <br>
+    <input type="password" name="adminPassw", id="ADminPassw" required>
+    
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}" required>
+    <br>
+    
+    <input type="submit", value="Login as Admin">
+</form>
+{% endblock content %}
