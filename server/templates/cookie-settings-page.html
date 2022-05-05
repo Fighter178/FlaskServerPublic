@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Cookie Settings{% endblock title %}
+{% block content %}
+
+<h2 style="display: inline;">Cookie Settings</h2><div class="beta" style="display: inline;" title="This feature is currently in the bata phase, and may not work as expected.">beta</div>
+<input type="checkbox" class="toggle" id="rq-cs" checked disabled>
+<label for="rq-cs">Required Cookies</label>
+<br>
+<input type="checkbox" class="toggle" id="gs-cs" checked>
+<label for="gs-cs">Google Search Cookies</label>
+<br>
+<input type="checkbox" class="toggle" id="ga-cs" checked>
+<label for="ga-cs">Google Search Ads</label>
+<br>
+<input type="checkbox" class="toggle" id="gm-cs" checked>
+<label for="gm-cs">Google Misc Cookies</label>
+<br>
+<input type="checkbox" class="toggle" id="3t-cs">
+<label for="3t-cs">3rd Party Tracking Cookies</label>
+<br>
+<button onclick="cookieHandler()" class="submit-btn-2">Save</button>
+<script>
+    function cookieHandler() {
+        swal("Success", "Your changes have been applied.", "success")
+        //I don't know which cookies are necessary rn, so just wait.
+        const gsc = document.getElementById('gs-cs')
+        const gac = document.getElementById('ga-cs')
+        const gmc = document.getElementById('gm-cs')
+        const otc = document.getElementById('3t-cs')
+        if (gsc.checked) {
+            localStorage.setItem('gs-cs', 'enabled')
+        } else {
+            localStorage.setItem('gs-cs', null)
+        }
+        if (gac.checked) {
+            localStorage.setItem('ga-cs', 'enabled')
+        } else {
+            localStorage.setItem('ga-cs', null)
+        }
+        if (gmc.checked) {
+            localStorage.setItem('gm-cs', 'enabled')
+        } else {
+            localStorage.setItem('gm-cs', null)
+        }
+        if (otc.checked) {
+            localStorage.setItem('3t-cs', 'enabled')
+        } else {
+            localStorage.setItem('3t-cs', null)
+        }
+    }
+    function loalSavedSettings() {
+        const gsc = document.getElementById('gs-cs')
+        const gac = document.getElementById('ga-cs')
+        const gmc = document.getElementById('gm-cs')
+        const otc = document.getElementById('3t-cs')
+        if (localStorage.getItem('gs-cs') !== 'enabled') {
+            gsc.checked = false;
+        } 
+        if (localStorage.getItem('ga-cs') !== 'enabled') {
+            gac.checked = false;
+        }
+        if (localStorage.getItem('gm-cs') !== 'enabled') {
+            gmc.checked = false;
+        }
+        if (localStorage.getItem('3t-cs') !== 'enabled') {
+            otc.checked = false;
+        }
+        if (localStorage.getItem('fistLoad') === null) {
+            gsc.checked = true;
+            gac.checked = true;
+            gmc.checked = true;
+            otc.checked = false;
+            localStorage.setItem('fistLoad', 'false')
+        }
+    }
+    document.addEventListener('load', loalSavedSettings())
+</script>
+{% endblock content %}

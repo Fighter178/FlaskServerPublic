@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Content{% endblock title %}
+{% block content %}
+<style>
+    .center {
+      top: 35rem;
+      padding: 70px 0;
+      text-align: center;
+      max-width: 50ch;
+    }
+</style>
+<div id="modal" title="Notice">
+    <p>This page is only avaliable to admins, as it is unstable. DO NOT OPEN TO PUBLIC UNITL BUGS ARE PATCHED!</p>
+    <button onclick="$('#modal').dialog('close')" class="submit-btn-2">Ok</button>
+</div>
+<center>
+<p class="center">Free Web Utilites is a website and service to enforce the Web Freedom Act. We allow the accsess of web freedom in blocked envirments, and our URL may change from time to time, as organizations block us. look out for .tk, .ul, .free, .us, and other URL names.
+    Play games and search annyomusly.
+</p>
+<center>
+<button class="submit-btn-2 c-bottom c-right" onclick="$('#modal').dialog('open')">Show Warning</button>
+<script>
+        $( "#modal" ).dialog({
+            autoOpen: true,
+            show: {
+              effect: "fade",
+              duration: 1000
+            },
+            hide: {
+              effect: "fold",
+              duration: 1000
+            }});
+</script>
+{% endblock content %}

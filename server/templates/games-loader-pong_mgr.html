@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Pong{% endblock title %}
+{% block content %}
+<script>
+    let gameWindow = true
+    let firstTime = true
+    let mode="{{mode}}"
+        function start_game() {
+            const vs = "{{vs}}"
+            if (!gameWindow.closed === false || firstTime === true) {
+                if(vs == "ai") {
+                    firstTime = false
+                    if (mode === "easy") {
+                        gameWindow = window.open("{{ url_for('pong_vs_ai_easy') }}", "pong_vs_ai", "width=800 height=800")
+                    } else {
+                        gameWindow = window.open("{{ url_for('pong_vs_ai_hard') }}", "pong_vs_ai", "width=800 height=800")
+                    }
+                    if (isPopupBlockerActivated(gameWindow)) {
+                        swal("Warning", "It seems that popups are blocked. To load the game, we need to open a popup. Please allow popups to play the game.", "warning")
+                    }
+                }
+            } else {
+                swal("Error", "Whoops! the game window is not closed!", "error")
+            }   
+        }
+
+    start_game()
+</script>
+<center><p onclick="start_game()" style="color: blue; cursor: pointer;"><u>Play Again</u></p></center>
+{% endblock content %}

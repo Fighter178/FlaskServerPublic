@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<form action="#" method="POST" autocomplete="on" title="Login"> 
+    <input type="text" name="name" autocomplete="off" class="text-input-1 box-shadow-on-hover-no-align mousetrap" placeholder="Enter your name" required><br>       
+    <input type="checkbox" name="autologout" class="box-shadow-on-hover-no-align" checked autocomplete id="autologoutcheckbox">
+    <label for="autologoutcheckbox" id="autologoutcheckbox">Quick Logout &zwnj;<i class="fa fa-question-circle cursor-help" title="When you click logout, you immiedately log out. (this setting is saved)"></i></label><br>
+    <input type="checkbox" name="save-session" class="box-shadow-on-hover-no-align" checked autocomplete id="save-session" title="This setting will be remembered, regardless if active (only saved for maximum session time).">
+    <label for="save-session" title="This setting will be remembered, regardless if active (only saved for maximum session time).">Remember Me</label>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <div class="recaptcha">{{ recaptcha }}</div>
+    <p class="error">{{ message }}</p>
+    <input type="submit" value="Login" class="submit-btn-2 cursor-auto box-shadow-on-hover-no-align"><p style="top: 65%"></p>
+    <button type="submit" disabled class="hidden" aria-hidden="true">Submit-on-Enter-Preventor for tab/keyboard users</button>
+</form>
+<script>$("i").tooltip()</script>
+<script>
+    {% if "save-session-setting" in session %}
+        document.getElementById("save-session").checked = true;
+    {% else %}
+        document.getElementById("save-session").checked = false;
+    {% endif %}
+    {% if "save-autologout-setting" in session %}
+        document.getElementById("autologoutcheckbox").checked = true;
+    {% else %}
+        document.getElementById("autologoutcheckbox").checked = false;
+    {% endif %}
+</script>
+{% endblock content %}

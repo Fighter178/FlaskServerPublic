@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Logout Confirmation{% endblock title %}
+{% block content %}
+<form method="POST" id="logout-form">
+  <input type="submit" value="Logout" class="submit-btn-2 center-x box-shadow-on-hover-no-align">
+  <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+  </form>
+<script defer>
+  const form=document.getElementById("logout-form");Mousetrap.bind("enter",function(){form.submit()});
+  /* dis is annying
+    swal({
+        title: "Logout Confirmation",
+        text: "You are about to log out! Make sure you intend to do so.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willLogout) => {
+        if (!willLogout) {
+            history.back()
+        }
+      }); */
+</script>
+{% endblock content %}

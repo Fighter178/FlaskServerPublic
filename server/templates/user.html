@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+<p class="welcome-text">Welcome, {{userName}}</p>
+<h3>What would you like to search, {{userName}}?</h3>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+    V1
+<script async src="https://cse.google.com/cse.js?cx=c6780c31ad59048d4"></script>
+<div class="gcse-search"></div>
+-->
+<!-- V2 -->
+<div class="gsce-search-outer"><div class="gcse-search"></div></div>
+<a href="https://cse.google.com/cse?cx=960ab960c51434afe#gsc.tab=0" target="_blank">View in New Tab</a>
+<p>I/We never keep logs of what is searched, and for the best results, use incognito mode, but if that's unavailable, use this, <br>because it won't affect ads and other trackers as much as a regular google search would.</p>
+{% endblock content %}

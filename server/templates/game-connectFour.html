@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% block title %}Connect Four VS AI (Defensive){% endblock title %}
+{% block content %}
+<style>
+    /*body{
+        background:#eee;
+      }*/
+      
+      h1{
+        text-align:center;
+        margin-bottom:5px;
+      }
+      
+      p.info{
+        text-align:center;
+        width:400px;
+        margin:0 auto;
+        font-size:12px;
+        font-weight:bold;
+        color:#666;
+        margin-bottom:20px;
+      }
+      
+      #game-base{
+        width:640px;  
+        margin:0 auto;
+        padding-top:60px;
+      }
+      
+      #game-table{
+        width:434px;
+        height:374px;
+        margin:0 auto;
+        /*background:url("http://img.sr/images/2014/01/28/base.png") 0 0 no-repeat;*/
+        position:relative;
+        border: 2px solid black;
+        border-radius 4px;
+      }
+      
+      .disc{
+        position:absolute;
+        z-index:-1;
+        top:-55px;
+        left:14px;
+        width:46px;
+        height:46px;
+        border-radius:46px;
+        transition:all 300ms;
+      }
+      
+      .disc.red{
+        background:#d96666;
+      }
+      
+      .disc.yellow{
+        background:#ffeb79;
+      }
+</style>
+<h1>Connect Four</h1>
+<p class="info">This is VS a defensive AI. A 2-person version will come soon (I hope). Click to drop a disk where your mouse is (the starting player is randomly chosen).</p>
+<div id="game-base">
+  <div id="game-table">
+    
+  </div>
+</div><!-- end base -->
+<!--
+<button class="submit-btn-2 start-btn" onclick="newgameHandler()" title="Start the game. NOTE: There is a 2.5 sec delay.">Start</button>
+<script>$(".start-btn").hide(); $(".start-btn").tooltip()</script>
+<button class="submit-btn-2 reset-btn" onclick="location.reload()">Reload</button>  *I couldn't figure out how to make it work on different screen sizes*-->
+<script>
+  var gameField = new Array();
+  var board = document.getElementById("game-table");
+  var currentCol;
+  var currentRow;
+  var currentPlayer;
+  var id = 1;
+  /*$(document).ready(function(){
+      $(".start-btn").show()
+  })
+  function newgameHandler() {
+      $(".start-btn").hide()
+      setTimeout(newgame(), 2500) //wait 2.5 sec to prevent the click of button making a disc go.
+  }*/
+  
+  function newgame(){
+    prepareField();
+    placeDisc(Math.floor(Math.random()*2)+1);
+    playerMoves = 0;
+  }
+  
+  function checkForVictory(row,col){
+    if(getAdj(row,col,0,1)+getAdj(row,col,0,-1) > 2){
+      return true;
+    } else {
+      if(getAdj(row,col,1,0) > 2){
+        return true;
+      } else {
+        if(getAdj(row,col,-1,1)+getAdj(row,col,1,-1) > 2){
+          return true;
+        } else {
+          if(getAdj(row,col,1,1)+getAdj(row,col,-1,-1) > 2){
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+  }
+  
+  function getAdj(row,col,row_inc,col_inc){
+    if(cellVal(row,col) == cellVal(row+row_inc,col+col_inc)){
+      return 1+getAdj(row+row_inc,col+col_inc,row_inc,col_inc);
+    } else {
+      return 0;
+    }
+  }
+  
+  function cellVal(row,col){
+    if(gameField[row] == undefined || gameField[row][col] == undefined){
+      return -1;
+    } else {
+      return gameField[row][col];
+    }
+  }
+  
+  function firstFreeRow(col,player){
+    for(var i = 0; i<6; i++){
+      if(gameField[i][col]!=0){
+        break;
+      }
+    }
+    gameField[i-1][col] = player;
+    return i-1;
+  }
+  
+  function possibleColumns(){
+    var moves_array = new Array();
+    for(var i=0; i<7; i++){
+      if(gameField[0][i] == 0){
+        moves_array.push(i);
+      }
+    }
+    return moves_array;
+  }
+  
+  function think(){
+    var possibleMoves = possibleColumns();
+    var aiMoves = new Array();
+    var blocked;
+    var bestBlocked = 0;
+    
+    for(var i=0; i<possibleMoves.length; i++){
+      for(var j=0; j<6; j++){
+        if(gameField[j][possibleMoves[i]] != 0){
+          break;
+        }
+      }
+      
+      gameField[j-1][possibleMoves[i]] = 1;
+      blocked = getAdj(j-1,possibleMoves[i],0,1)+getAdj(j-1,possibleMoves[i],0,-1);
+      blocked = Math.max(blocked,getAdj(j-1,possibleMoves[i],1,0));
+      blocked = Math.max(blocked,getAdj(j-1,possibleMoves[i],-1,1));
+      blocked = Math.max(blocked,getAdj(j-1,possibleMoves[i],1,1)+getAdj(j-1, possibleMoves[i],-1,-1));
+      
+      if(blocked >= bestBlocked){
+        if(blocked>bestBlocked){
+          bestBlocked = blocked;
+          aiMoves = new Array();
+        }
+        aiMoves.push(possibleMoves[i]);
+      }
+      gameField[j-1][possibleMoves[i]] = 0;
+    }
+    
+    return aiMoves;
+  }
+  
+  function Disc(player){
+    this.player = player;
+    this.color = player == 1 ? 'red' : 'yellow';
+    this.id = id.toString();
+    id++;
+    
+    this.addToScene = function(){
+      board.innerHTML += '<div id="d'+this.id+'" class="disc '+this.color+'"></div>';
+      if(currentPlayer==2){
+        //computer move
+        var possibleMoves = think();
+        var cpuMove = Math.floor( Math.random() * possibleMoves.length);
+        currentCol = possibleMoves[cpuMove];
+        document.getElementById('d'+this.id).style.left = (14+60*currentCol)+"px";
+        dropDisc(this.id,currentPlayer);
+      }
+    }
+    
+    var $this = this;
+    document.onmousemove = function(evt){
+      if(currentPlayer == 1){
+      currentCol = Math.floor((evt.clientX - board.offsetLeft)/60);
+      if(currentCol<0){currentCol=0;}
+      if(currentCol>6){currentCol=6;}
+      document.getElementById('d'+$this.id).style.left = (14+60*currentCol)+"px";
+      document.getElementById('d'+$this.id).style.top = "-55px";
+      }
+    }
+    document.onload = function(evt){
+      if(currentPlayer == 1){
+      currentCol = Math.floor((evt.clientX - board.offsetLeft)/60);
+      if(currentCol<0){currentCol=0;}
+      if(currentCol>6){currentCol=6;}
+      document.getElementById('d'+$this.id).style.left = (14+60*currentCol)+"px";
+      document.getElementById('d'+$this.id).style.top = "-55px";
+      }
+    }
+    
+    document.onclick = function(evt){
+      if(currentPlayer == 1){
+        if(possibleColumns().indexOf(currentCol) != -1){
+          dropDisc($this.id,$this.player);
+        }
+      }
+    }
+  }
+  
+  function dropDisc(cid,player){
+    currentRow = firstFreeRow(currentCol,player);
+    moveit(cid,(14+currentRow*60));
+    currentPlayer = player;
+    checkForMoveVictory();
+    drawChecker();
+  }
+  
+  function checkForMoveVictory(){
+    if(!checkForVictory(currentRow,currentCol)){
+      placeDisc(3-currentPlayer);
+    } else {
+      var ww = currentPlayer == 2 ? 'Computer' : 'Player';
+      placeDisc(3-currentPlayer);
+      alert(ww+" win!"+" Take this time to see what happened.");
+      board.innerHTML = "";
+      newgame();
+    }
+  }
+  
+  function placeDisc(player){
+    currentPlayer = player;
+    var disc = new Disc(player);
+    disc.addToScene();
+  }
+  
+  function prepareField(){
+    gameField = new Array();
+    for(var i=0; i<6; i++){
+      gameField[i] = new Array();
+      for(var j=0; j<7; j++){
+        gameField[i].push(0);
+      }
+    }
+  }
+  
+  function moveit(who,where){
+      document.getElementById('d'+who).style.top = where+'px';
+  }
+  let playerMoves
+  playerMoves = 0
+  function incPlayerMoves() {
+    var ww = currentPlayer == 2 ? 'Computer' : 'Player';
+    if (ww == "Player") {
+      playerMoves++
+      console.debug(playerMoves)
+    }
+  }
+  function drawChecker() {
+    console.debug("checked INIT")
+    incPlayerMoves()
+    if (playerMoves == 42) { // check for all draw possibilties 
+      swal("Draw!", "Neither have won...", "info")
+      .then((v) => {
+        location.reload()
+      })
+    } 
+  }
+
+newgame()
+</script>
+{% endblock content %}

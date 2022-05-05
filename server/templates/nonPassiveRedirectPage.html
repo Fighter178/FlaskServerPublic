@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Redirection{% endblock title %}
+{% block content %}
+<center>
+<h1>You are being redirected.</h1>
+<p>Click the button below to accept redirect.</p>
+<p>You will be redirected to <u><b>{{url}}</b></u>. Before accepting this redirect, make sure you trust this website.</p>
+<form action="#" method="post" id="redirect-form">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    <input type="submit" value="Redirect Me!" class="submit-btn-2 box-shadow-on-hover">
+</form>
+<form action="" mathod="get">
+<input type="submit" value="I'd rather go back." onclick="goBackHandlerFunc()" class="submit-btn-2 box-shadow-on-hover" id="do-not-submit">
+</form>
+</center>
+<p style="top: 75%"></p>
+<script>
+    $("#do-not-submit").click(function(event) {
+        event.preventDefault();
+    });
+</script>
+<script>
+    function isValidURL(string) {
+        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+        return (res !== null)
+      }
+      function ValidateIPaddress(ipaddress) {  
+        if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) {  
+          return (true)  
+        }  
+        alert("You have entered an invalid IP address!")  
+        return (false)  
+      }  
+      function filterA(string) {
+        let n = string.indexOf('/');
+        string = string.substring(0, n != -1 ? n : s.length);
+        return string
+      }
+    function goBackHandlerFunc() {
+        const params = new URLSearchParams(window.location.search)
+        if (params.has("fallback")  == true) { //if a fallback query was provided
+            if (isValidURL(params.get("fallback"))) {
+                location.href=params.get("fallback")
+            } else if(ValidateIPaddress(params.get("fallback"))){
+                location.href=params.get("fallback")
+            } else if(ValidateIPaddress(filterA(params.get("fallback")))) {
+                location.href=params.get("fallback")
+            } else {
+                swal("Previous URL Error", "We attempted to redirect you to the fallback, but it is not a valid URL", "error")
+            }
+        } else { //if no fallback was provided use history.back()
+            history.back()
+        }
+    }
+</script>
+<script>
+    swal("Redirection Notice", "You are being redirected. The website is: {{url}}. \nMake sure you trust this website.", "warning")
+.then((value) => {
+    Mousetrap.bind("enter", function(){
+        document.getElementById("redirect-form").submit()
+    })
+    console.log("ACCEPT: "+value)
+});
+</script>
+<p style="position: absolute; top: 75%"></p>
+{% endblock content %}

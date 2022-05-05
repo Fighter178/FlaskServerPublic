@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}This is your Link{% endblock title %}
+{% block content %}
+<style>
+    a {
+      color: #0d6efd;
+    }
+    .link-container-shown {
+      display: block;
+    }
+    .link-container-hidden {
+      display: none;
+    }
+  </style>
+<div id="container">
+<p id="link">Your link is: <a href="https://{{url}}" target="_blank">{{url}}</a></p>
+<div class="link-container-shown"><button id="show-btn" class="submit-btn-2">Shorten URL</button></div><div class="link-container-hidden"><a href="{{surl}}">{{surl}}</a> | Thanks to tinyURL.com (WARNING: BROKEN)<div><p>If your link does not show, create one manually <a href="https://tinyurl.com/">here<a>.</p></div></div>
+</div>
+<script>
+  $('#show-btn').click(function(){
+    $("#show-btn").removeClass("submit-btn-2")
+    $("#show-btn").addClass("submit-btn-2-disabled")
+    $("#show-btn").text("Shortened!")
+    $(".link-container-hidden").show()
+    $("#show-btn").attr("disabled", "true")
+  });
+</script>
+
+
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Admin Login{% endblock title %}
+{% block content %}
+<script defer>
+    function showHdiePassw() {
+        const password = document.getElementById("AdminPassw");
+        if (password.type === "password") {
+            password.type = "text";
+        } else {
+            password.type = "password";
+        }
+    }
+    
+    Mousetrap.bind("alt+p", function(){
+        const password = document.getElementById("AdminPassw");
+        const checkbox = document.getElementById("checkbox1");
+        if (password.type === "password") {
+            password.type = "text";
+            checkbox.checked = true;
+        } else {
+            password.type = "password";
+            checkbox.checked = false;
+        }
+    });
+    function uncheck() {
+    document.getElementById("checkbox1").checked = false;
+    }
+</script>
+<form method="post", id="login-form">
+    <input type="text" name="adminName" class="text-input-1 mousetrap box-shadow-on-hover-no-align" value="" autocomplete="off" placeholder="Enter Name" required><br>
+    <input type="password" name="adminPassw", id="AdminPassw" value="" outocomplete="off" class="text-input-1 mousetrap box-shadow-on-hover-no-align" placeholder="Enter Password" required><br>
+    <span title="You can also use alt+p"><input type="checkbox" onclick="showHdiePassw()" id="checkbox1">
+    <label for="checkbox1">Show Password</label></span><br>
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}" required>
+    <input type="submit" value="Login as Admin" class="submit-btn-2 box-shadow-on-hover"><br><br>
+    <input type="reset" value="Reset" class="submit-btn-2 box-shadow-on-hover"><br><p style="top: 65%;"></p>
+</form>
+<script>uncheck()</script>
+{% endblock content %}

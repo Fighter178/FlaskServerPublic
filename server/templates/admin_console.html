@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Admin Console{% endblock title %}
+{% block content %}
+<form action="/admin/console/commit" method="POST">
+    <h2>Options</h2>
+    <input type="checkbox" name="logoutall" id="checkbox1">
+    <label for="checkbox1">Log everyone out (you too)</label><br>
+    <input type="checkbox" name="reset-secret-key" id="reset-secret-key">
+    <label for="reset-secret-key">Reset Secret Key (may log users out)</label><br>
+    <input type="checkbox" name="shutdown" id="shutdown" onclick="shutdownWarning()" autocomplete="off"> 
+    <label for="shutdown" onclick="shutdownWarning()">Shutdown Server (Requeres a server restart to turn back on).</label>
+    <input type="password" name="ownerKey" id="ownerKey" autocomplete="new-password" placeholder="Enter the onwner's key"><br>
+    <input type="submit" class="submit-btn-2" value="Run Command(s)">
+</form>
+<script>
+    $("#ownerKey").hide()
+    let shutdownChecked = false;
+    function shutdownWarning() {
+        if (!document.getElementById("shutdown").checked) {
+            swal({
+                title: "Are you sure?",
+                text: "This will bring the website offline until the owner restarts it.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((x) => {
+                if(x) {
+                    document.getElementById("shutdown").checked = true;
+                    shutdownChecked = true;
+                    $("#ownerKey").fadeIn(500)
+                } else {
+                    document.getElementById("shutdown").checked = false;
+                    shutdownChecked = false;
+                }
+            });
+        } else {
+            $("#ownerKey").fadeOut(500)
+            shutdownChecked = false;
+            document.getElementById("shutdown").checked = false;
+            return
+        }
+    };
+</script>
+{% endblock content %}

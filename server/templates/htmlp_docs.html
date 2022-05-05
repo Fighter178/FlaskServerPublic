@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %} HTML Plus Docs {% endblock title %}
+{% block content %}
+<style>
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+         /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      
+      /* Modal Content */
+      .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        max-width: 125ch;
+        color: black;
+        top: 30%;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+      
+      /* The Close Button */
+      .mde-close {
+        position: relative;
+        z-index: 2;
+        color: #aaaaaa;
+        left: 83.5%;
+        top: 37.5%;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      
+      .mde-close:hover,
+      .mde-close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+</style>
+<script>
+  htmlp.define.aac()
+</script>
+<div>
+    <h1>HTML Plus</h1>
+    <h3>1) Modal Easy, use to make modals easier!</h3>
+    <p>But, modals are already easy right? NO! You have to use your own JS, CSS, and confusing HTML!<br>Modal Easy makes modals easy!</br></p>
+    Example:<br>
+</div>
+<div>
+  <textarea disabled rows="25" cols="70" style="resize:both;">
+    <code>
+    <script>
+      htmlp.define.mde() // allow use of <htmlp-modal>. Replace with htmlp.define.all() to allow use of everything
+    </script>
+        <htmlp-modal id="htmlp_modal">
+          <div class="modal-content">
+            <h4>Modal Title</h4>
+            <p>Modal Content</p>
+          </div>
+        </htmlp-modal>
+       <script>
+           // This is for showing the modal!
+          function show(){
+              document.getElementById("htmlp_modal").show()
+          }
+       </script>
+       <button onclick="show()" class="submit-btn-2">Show Modal (ME)</button>
+    </code>
+  </textarea>
+  VS
+  <textarea disabled style="resize:both;" cols="40" rows="25">
+    <code>
+      <div class="htmlp_modal" id="regular_modal"> <!--Uses same styleing so class is the same-->
+        <div class="modal-content">
+          <span onclick="hideR()" class="mde_close">&times;</span>
+           <h4>Title</h4>
+           <p>Content</p>
+        </div>
+      </div>
+    </code>
+    <script>
+      function showR() {
+        document.getElementById('regular_modal').style.display = "block"
+       }
+      function hideR() {
+        document.getElementById('regular_modal').style.display = "none"
+       }
+    </script>
+    <button onclick="showR()"></button>
+  </textarea>
+</div>
+  <h5>Makes this: </h5>
+  <script>
+    htmlp.define.mde() 
+     // This is for showing the modal!
+     function show(){
+      document.getElementById("htmlp_modal").show()
+    }
+  </script>
+      <htmlp-modal id="htmlp_modal">
+        <div class="modal-content">
+          <h4>Modal Title</h4>
+          <p>Modal Content</p>
+        </div>
+      </htmlp-modal>
+     <button onclick="show()" class="submit-btn-2">Show Modal (ME)</button>
+     <code>
+      <div class="modal" id="regular_modal" style="display:none;"> <!--Uses same styleing so class is the same-->
+        <div class="modal-content">
+          <span onclick="hideR()" class="mde-close">&times;</span>
+           <h4>Title</h4>
+           <p>Content</p>
+        </div>
+      </div>
+    </code>
+     <script>
+       function showR() {
+       document.getElementById('regular_modal').style.display = "block"
+       }
+       function hideR() {
+        document.getElementById('regular_modal').style.display = "none"
+       }
+     </script>
+     <button onclick="showR()">Show Modal (Regular/Vanilla)</button>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Page Creator{% endblock title %}
+{% block content %}
+<form action="/page-creator/make" method="post" autocomplete="off" tilte="Make a page">
+    <input type="text" name="pg-title" placeholder="Page Title"></input>
+    <input type="checkbox" name="title-branding" id="cb1" checked><label for="cb1">Show Title Branding</label><br>
+    <input type="text" name="hd1-txt" placeholder="Enter First Heading">
+    <input type="checkbox" name="center-hd1" id="cb2" checked><label for="cb2">Center First Heading</label><br>
+    <textarea name="main-content" placeholder="Enter main content" style="resize:both;"></textarea><br>
+    <input type="checkbox" name="center-content" id="cb3" checked><label for="cb3">Center Main Content</label><br>
+    <input type="checkbox" name="cute-image" id="cb4" checked><label for="cb4">Add a cute image</label><br>
+    <input type="submit" class="submit-btn-2" value="Make Page">
+</form>
+{% endblock content %}

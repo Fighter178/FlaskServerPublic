@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Changelog{% endblock title %}
+{% block content %}
+<script>animate=true; animateBodyload()</script>
+<h3>1.0 Full Public Release</h3>
+<h5>- Website created with domain <a href="https://freewebutilites.pythonanywhere.com/" target="_blank">freewebutilites.pythonanywhere.com</a> (still up, updated to v1.3)</h5>
+<h5>- Little features, only one game, breakout</h5>
+<h3>1.1 Minor Game Update</h3>
+<h5>- Snake was added</h5>
+<h5>- Realized it had bugs & tried to fix them, which made it worse</h5>
+<h3>1.2 Games Update</h3>
+<h5>- Added standard snake</h5>
+<h5>- Added a beta of snake v2</h5>
+<h3>1.3 Fixing Mistakes</h3>
+<h5>- Relized that the URL was misspelled</h5>
+<h5>- Changed URL to correct spelling (<a href="https://freewebutilities.pythonanywhere.com/" target="_blank">freewebutilities.pythonanywhere.com</a>)</h5>
+<h5>- Decided to keep the mispelled URL up, but not update it</h5>
+<h5>- Snake v2 officially released</h5>
+<h3>1.4 Minor Styling Update</h3>
+<h5>- Navbar changed from light to dark</h5>
+<h5>- Cookie Settings page added</h5>
+<h3>1.5 Accessibility  Update</h3>
+<h5>- Added a skip to content button on tab press</h5>
+<h5>- Thought  about accesibii, but it's too expensive for this little porject</h5>
+<h5>- Pong was added</h5>
+<h3>1.6 Styles Update Part 1</h3>
+<h5>- Styled buttons, and added light animation</h5>
+<h3>1.7 Styles Update Part 2</h3>
+<h5>- Added more animation</h5>
+<h5>- Added shadows</h5>
+<h3>1.8 History Update</h3>
+<h5>- Added this changelog page</h5>
+<h5>- Added a shadow to the games dropdown</h5>
+<h3>1.9 Community Update</h3>
+<h5>- Added a comment and comment policy page</h5>
+<h5>- Added a shadow to the navbar</h5>
+<h5>- Quality of life improvements (eg. Quick Logout, on-site notifications, scroll to top button, save preferences, etc)</h5>
+<h5>- Added some security features</h5>
+<h5>- Extended the time your login/session is saved to six hours before you must re-login</h5>
+<h5>- Added Connect 4</h5>
+<h5>- Font, Buttons, and overall look of the site tweaked, and added various tooltips and helpers (<i class="fa fa-question-circle" title="This is a tooltip, and the question mark is a 'helper'"></i>)</h5>
+<h5>- When logged in, the login link changes to the logout link, instead of having two seperate links</h5>
+<h5>- Removed the trailing slash on most pages. (OLD: .../changelog/ NEW: .../changelog)</h5>
+<script>
+    $(".fa-question-circle").tooltip()
+</script>
+{% endblock content %}

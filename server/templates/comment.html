@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Comment{% endblock title %}
+{% block content %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+<style>
+  a {
+    color: #0d6efd;
+  }
+</style>
+<div id="disqus_thread"></div>
+<div class="w3-container" id="w3-container" class="hidden-important">
+<div class="w3-light-grey">
+  <div id="myBar" class="w3-container w3-blue w3-center" style="width:0%">0%</div>
+</div>
+<br>
+</div>
+
+<script>
+
+function move() {
+  const elem = document.getElementById("myBar");   
+  let width = 0;
+  const id = setInterval(frame, 10);
+  const container = document.getElementById("w3-container")
+  const disqus = document.getElementById("disqus_thread")
+  disqus.style.display = "none"
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      container.style.display = "none";
+      disqus.style.display = "block";
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+      elem.innerHTML = width * 1  + '%';
+    }
+  }
+}move()
+</script>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://free-web-utilities.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+{% endblock content %}
+

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Homepage{% endblock title %}
+{% block content %}
+<h1>Welcome, Please <a href="/login">login</a> to continue.</h1>
+<small>You can also press enter.</small>
+<script>
+    Mousetrap.bind("enter", function(){
+        window.location.replace("/login")
+    })
+</script>
+{% endblock content %}
