@@ -135,7 +135,7 @@ def admin_login():
         return redirect(url_for("admin_console"))
     if request.method == "POST":
         if request.form.get("csrf_token") == CSRF_TOKEN:
-            if request.form.get("adminPassw") != "0903admin":
+            if request.form.get("adminPassw") != "adminpassword":
                 return redirect(url_for("admin_login"))
             else:
                 session["user"] = request.form.get("adminName")
