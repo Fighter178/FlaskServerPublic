@@ -22,7 +22,7 @@ app.url_map.strict_slashes = False
 
 CORS(app)   
 #app.secret_key=sha256(token_urlsafe(16).encode()).hexdigest()
-app.secret_key = "ed37e3308d7f1973d6b74fdc058a31ffda681f9d7f7cb9d2840d71d14acd1022" # <-- secret
+app.secret_key = "Secret" # <-- secret
 app.config['RECAPTCHA_SITE_KEY'] = '6LdPrVceAAAAABZiwS1JBfw7qYfW_sLzSzmMzWNP' # <-- Add your site key
 app.config['RECAPTCHA_SECRET_KEY'] = '6LdPrVceAAAAANSZvKNe8MQzwieTAQKrBz5ak6aW' # <-- Add your secret key
 AUTO_LOGIN_ENABLED = True #set to false when in production
