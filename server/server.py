@@ -9,7 +9,6 @@ from validators import url as is_url
 from urllib.parse import urlparse
 import jinja2
 import pyshorteners
-#tinyURL token: p2vYpsnknfHF8tSqzbuQ8C0zjWl3WIUpjUwFyH4TYDSb0tJ9IaYn5LclMEMw
 def shorten_url(long_url):
     #TinyURL shortener service
     type_tiny = pyshorteners.Shortener()
